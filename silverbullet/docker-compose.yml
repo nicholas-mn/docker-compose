@@ -1,0 +1,19 @@
+services:
+  silverbullet:
+    image: zefhemel/silverbullet
+    restart: unless-stopped
+    environment:
+    - SB_USER=username:yourVerySecurePassHere
+    volumes:
+      - ./space:/space
+#    Disabled because the silverbullet application
+#    is in the "caddy" network
+#    ports:
+#      - 127.0.0.1:3000:3000
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    name: caddy
+    external: true
