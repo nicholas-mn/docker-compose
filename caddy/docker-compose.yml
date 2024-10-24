@@ -1,0 +1,33 @@
+services:
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    hostname: caddy
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+ #     If you want to enable logging in Caddy,
+ #     enable this. See README for example.
+ #     - $PWD/logs:/var/log/caddy/
+ 
+ #  Probably a one-off, but Caddy freaked out on me one time
+ #  and decided to use a gigantic amount of memory, so I
+ #  always put a failsafe here.
+    mem_limit: 400m
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+networks:
+  default:
+    name: caddy
+    external: true
