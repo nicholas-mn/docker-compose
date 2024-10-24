@@ -1,0 +1,38 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    ports:
+      - 5678:5678
+    environment:
+      - N8N_HOST=${SUBDOMAIN}.${DOMAIN_NAME}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./local_files:/files
+
+# For queing stuff. Good for when a process
+# is only supposed to run one at a time.
+  rabbitmq:
+    hostname: my-rabbit
+    container_name: some-rabbit
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=Frosted-Stereo-Tint-Undamaged9-Annotate
+      - RABBITMQ_DEFAULT_VHOST=n8n
+    volumes:
+      - ./docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    image: rabbitmq:3.13-management
+
+volumes:
+  n8n_data:
+    external: true
