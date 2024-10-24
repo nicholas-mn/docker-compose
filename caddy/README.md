@@ -1,7 +1,7 @@
 
 # Setup
 
-Network is set to `external: true`, so the `caddy` networks needs to be created seperately before running:
+Network is set to `external: true`, so the `caddy` network needs to be created seperately before running:
 
 `$ docker network create caddy`
 
