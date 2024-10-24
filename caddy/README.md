@@ -5,7 +5,7 @@ Network is set to `external: true`, so the `caddy` network needs to be created s
 
 `$ docker network create caddy`
 
-My reasoning for this, is so the network don't disappear if I decide to do a `docker compose down` for whatever reason.
+My reasoning for doing this, is so the network don't disappear if I decide to do a `docker compose down` for whatever reason.
 
 # Logging
 
